@@ -12,6 +12,15 @@
       },
       "Packages": {
         "$path": "Packages"
+      },
+      "ClientModules": {
+        "$path": "ClientModules"
+      }
+    },
+
+    "ServerStorage": {
+      "ServerModules": {
+        "$path": "ServerModules"
       }
     },
 
