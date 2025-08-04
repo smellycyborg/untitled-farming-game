@@ -62,7 +62,7 @@ end
 
 ]]
 
-function sequence.new(tweenTime, startCFrame, endCFrame)
+function sequence.new(tweenTime: number, startCFrame: CFrame, endCFrame: CFrame)
     assert(tweenTime, "Attempt to index nil with argument 1.")
     assert(startCFrame, "Attempt to index nil with argument 2.")
     assert(endCFrame, "Attempt to index nil with argument 2.")
@@ -71,14 +71,18 @@ function sequence.new(tweenTime, startCFrame, endCFrame)
     local private = {}
 
     self.sequenceCompleted = Signal.new()
+    self.finished = Signal.new()
 
-    private.sequences = {
-        [1] = {
-            tweenTime = tweenTime,
-            startCFrame = startCFrame,
-            endCFrame = endCFrame,
-        }
+    private.sequences = {}
+
+
+    local data = {
+        tweenTime = tweenTime,
+        startCFrame = startCFrame,
+        endCFrame = endCFrame,
     }
+
+    private.sequences = Sift.Array.push(private.sequences, data)
 
     sequencePrivate[self] = private
 
@@ -99,7 +103,7 @@ end
 
 ]]
 
-function sequencePrototype:addSequence(props)
+function sequencePrototype:addSequence(props: {[string]: any})
     local startCFrame = props.startCFrame
     local endCFrame = props.endCFrame
     local tweenTime = props.tweenTime or 0
@@ -116,10 +120,12 @@ function sequencePrototype:addSequence(props)
         delayTime = delayTime,
     }
 
-    Sift.Array.push(private.sequences, data)
+    private.sequences = Sift.Array.push(private.sequences, data)
+
+    print("Added sequence, ", self:getLength())
 end
 
-function sequencePrototype:playIndex(index)
+function sequencePrototype:playIndex(index: number)
     assert(index, "Attempt to index nil with argument 1.")
 
     local private = sequencePrivate[self]
@@ -129,7 +135,7 @@ function sequencePrototype:playIndex(index)
     self.sequenceCompleted:Fire(index)
 end
 
-function sequencePrototype:playAll(delayTime)
+function sequencePrototype:playAll(delayTime: number)
     delayTime = delayTime or 0
 
     local private = sequencePrivate[self]
@@ -143,6 +149,12 @@ function sequencePrototype:playAll(delayTime)
 
         self.sequenceCompleted:Fire(index)
     end
+
+    self.finished:Fire()
+end
+
+function sequencePrototype:getLength()
+    return #sequencePrivate[self].sequences
 end
 
 sequencePrototype.__index = sequencePrototype

@@ -32,7 +32,7 @@ function animation.new(id: number, isUrl: boolean, fadeTime: number, weight:numb
 	self.stopped = Signal.new()
 
 	private.animation = Instance.new("Animation")
-	private.animation.AnimationId = not isUrl and "http://www.roblox.com/asset/?id=" .. id or id
+	private.animation.AnimationId = id -- not isUrl and "http://www.roblox.com/asset/?id=" .. id or 
 	
 	private.fadeTime = fadeTime
 	private.weight = weight

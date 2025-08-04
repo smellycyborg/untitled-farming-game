@@ -13,8 +13,15 @@
       "Packages": {
         "$path": "Packages"
       },
-      "ClientModules": {
-        "$path": "ClientModules"
+      "Config": {
+        "$path": "Config"
+      },
+      "Components" : {
+        "$path": "Components"
+      },
+      
+      "Modules": {
+        "$path": "Modules"
       }
     },
 
@@ -46,6 +53,7 @@
         "$className": "Part",
         "$properties": {
           "Anchored": true,
+          "Transparency": 1,
           "Color": [
             0.38823,
             0.37254,
