@@ -23,7 +23,6 @@ for _, animation: Animation in Emotes:GetChildren() do
     end
 end
 
-
 local function playAnimation(animationName: string, looped: boolean)
     local animation = animations[animationName]
 
